@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  api:
+    build: ./api
+    image: thepiperpied/ums:0.0.1
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./api:/app
+    command: ["npm", "run", "start-dev"]
+    links: 
+      - db
+    depends_on:
+      - db
+
+  db:
+    build: ./db
+    image: thepiperpied/ums-db:0.0.1
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    command: ["neo4j"]
